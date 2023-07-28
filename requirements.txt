@@ -1,0 +1,8 @@
+pymongo== 4.2.0
+pymongo[srv]== 4.2.0
+certifi
+pandas 
+numpy 
+typing
+scikit-learn
+# -e . ## Equlivalent to the  packages= find_packages().
