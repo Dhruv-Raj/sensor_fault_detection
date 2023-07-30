@@ -1,8 +1,9 @@
 from sensor.exception import CustomException
 from sensor.logger import logging
 import sys, os
-import dill
+import pickle
 import yaml
+# import pickle
 import numpy as np
 
 ## Rading the yaml file from config--> schema.yaml
@@ -25,7 +26,6 @@ def write_yaml_file(file_path: str, content: object, replace: bool= False) -> No
         with open(file_path, 'w') as file:
             yaml.dump(content, file)
             
-
     except Exception as e:
         raise CustomException(e, sys)
     
@@ -48,7 +48,7 @@ def save_numpy_array_data(file_path: str, array: np.array) -> np.array:
     except Exception as e:
         raise CustomException(e, sys)
     
-def load_numpy_array_data(file_path: str, array: np.array) -> np.array:
+def load_numpy_array_data(file_path: str) -> np.array:
     '''
     Load numpy array data to file
     file_path: str location of file to load
@@ -73,21 +73,18 @@ def save_object(file_path: str, obj: object) -> None:
         dir_path= os.path.dirname(file_path)
         os.makedirs(dir_path, exist_ok= True)
         with open(file_path, 'wb') as file_obj:
-            dill.dump(obj, file_obj)
+            pickle.dump(obj, file_obj)
         logging.info('Excited the save_object method of main_utils class')
     except Exception as e:
         raise CustomException(e, sys)
 
-def load_object(file_path: str, obj: object) -> object:
+
+   
+def load_object(file_path: str, ) -> object:
     try:
-        logging.info('Entered the load_object method of main_utils class')
-        
         if not os.path.exists(file_path):
-            raise Exception(f'The file path: {file_path} is not exist!')
-        
-        with open(file_path, 'rb') as file_obj:
-            dill.load(file_obj)
-            return dill
-        logging.info('Excited the load_object method of main_utils class')
+            raise Exception(f"The file: {file_path} is not exists")
+        with open(file_path, "rb") as file_obj:
+            return pickle.load(file_obj)
     except Exception as e:
-        raise CustomException(e, sys)
+        raise CustomException(e, sys) 

@@ -48,9 +48,9 @@ class DataTransformationConfig:
 
         self.data_transformation_dir: str= os.path.join(training_pipeline_config.artifact_dir, DATA_TRANSFORMATION_DIR_NAME)
         
-        self.transformed_train_file_path: str= os.path.join(self.data_transformation_dir, DATA_TRANSFORMATION_TRANSFORMED_DIR_NAME,
+        self.transformed_train_file_path: str= os.path.join(self.data_transformation_dir, DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,
                                                        TRAIN_FILE_NAME.replace('csv', 'npy'), )
-        self.transformed_test_file_path: str= os.path.join(self.data_transformation_dir, DATA_TRANSFORMATION_TRANSFORMED_DIR_NAME,
+        self.transformed_test_file_path: str= os.path.join(self.data_transformation_dir, DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,
                                                        TEST_FILE_NAME.replace('csv', 'npy'), )
 
         self.transformed_object_file_path: str= os.path.join(self.data_transformation_dir, DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR,
@@ -64,5 +64,18 @@ class ModelTrainerConfig:
 
         self.trained_model_file_path: str= os.path.join(self.model_trainer_dir, MODEL_TRAINER_TRAINED_MODEL_DIR, MODEL_FILE_NAME)
         self.expected_accuracy: float= MODEL_TRAINER_EXPECTED_SCORE
-        self.overfitting_underfitting_threshold: float= MODEL_TRAINER_OVER_FIITING_UNDER_FITTING_THRESHOLD
+        self.overfitting_underfitting_threshold= MODEL_TRAINER_OVER_FIITING_UNDER_FITTING_THRESHOLD
 
+class ModelEvaluationConfig:
+    def __init__(self, training_pipeline_config: TrainingPipelineConfig):
+        self.model_evalution_dir: str= os.path.join(training_pipeline_config.artifact_dir, MODEL_EVALUATION_DIR_NAME)
+        self.report_file_path: str= os.path.join(self.model_evalution_dir, MODEL_EVALUATION_REPORT_NAME)
+        self.change_threshold: str= MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE
+
+class ModelPusherConfig:
+    def __init__(self,training_pipeline_config:TrainingPipelineConfig):
+        self.model_evaluation_dir: str= os.path.join(training_pipeline_config.artifact_dir, MODEL_PUSHER_DIR_NAME)
+        self.model_file_path = os.path.join(self.model_evaluation_dir, MODEL_FILE_NAME)
+        self.saved_model_path= os.path.join(self.model_evaluation_dir, MODEL_FILE_NAME)
+        timestamp= round(datetime.now().timestamp())
+        self.saved_model_path= os.path.join(SAVED_MODEL_DIR, f'{timestamp}', MODEL_FILE_NAME)

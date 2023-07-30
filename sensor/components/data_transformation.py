@@ -30,6 +30,7 @@ class DataTransforamtion:
             self.data_transformation_config= data_transformation_config
         except Exception as e:
             raise CustomException(e, sys)
+
         
     @staticmethod
 
@@ -51,7 +52,7 @@ class DataTransforamtion:
             )
 
             return preprocessor
-
+        
         except Exception as e:
             raise CustomException(e, sys)
         
@@ -95,7 +96,7 @@ class DataTransforamtion:
              #save train and test numpy array data
             save_numpy_array_data(self.data_transformation_config.transformed_train_file_path, array= train_arr)
             save_numpy_array_data(self.data_transformation_config.transformed_test_file_path, array= test_arr)
-            save_numpy_array_data(self.data_transformation_config.transformed_object_file_path, preprocessor_object,)
+            save_object( self.data_transformation_config.transformed_object_file_path, preprocessor_object,)
 
             # preparing artifact
 
