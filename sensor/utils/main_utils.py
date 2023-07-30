@@ -77,3 +77,17 @@ def save_object(file_path: str, obj: object) -> None:
         logging.info('Excited the save_object method of main_utils class')
     except Exception as e:
         raise CustomException(e, sys)
+
+def load_object(file_path: str, obj: object) -> object:
+    try:
+        logging.info('Entered the load_object method of main_utils class')
+        
+        if not os.path.exists(file_path):
+            raise Exception(f'The file path: {file_path} is not exist!')
+        
+        with open(file_path, 'rb') as file_obj:
+            dill.load(file_obj)
+            return dill
+        logging.info('Excited the load_object method of main_utils class')
+    except Exception as e:
+        raise CustomException(e, sys)
