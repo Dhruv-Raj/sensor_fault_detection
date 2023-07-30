@@ -35,9 +35,9 @@ class ModelEvaluation:
             test_df= pd.read_csv(valid_test_path)
 
             df= pd.concat([train_df, test_df])
-            # y_true = df[TARGET_COLUMN]
-            # y_true.replace(TargetValueMapping().to_dict(),inplace=True)
-            # df.drop(TARGET_COLUMN,axis=1,inplace=True)
+            y_true = df[TARGET_COLUMN]
+            y_true.replace(TargetValueMapping().to_dict(),inplace=True)
+            df.drop(TARGET_COLUMN,axis=1,inplace=True)
             
             # Checking the availability of model
             train_model_file_path= self.model_trainer_artifact.trained_model_file_path
@@ -61,7 +61,7 @@ class ModelEvaluation:
             train_model= load_object(file_path= train_model_file_path)
 
             ## Predicting 
-            y_true= df[TARGET_COLUMN]
+            
             y_trained_pred= train_model.predict(df)
             y_latest_pred= latest_model.predict(df)
 
@@ -71,7 +71,7 @@ class ModelEvaluation:
             latest_metric= get_classification_score(y_true, y_latest_pred)
             
 
-            improved_accuracy= trained_metric - latest_metric
+            improved_accuracy= trained_metric.f1_score - latest_metric.f1_score
             if self.model_evaluation_config.change_threshold < improved_accuracy:
                 is_model_accepted= True
             else:
