@@ -87,3 +87,5 @@ if __name__=='__main__':
      # set_env_variable(env_file_path)
      app_run(app, host=APP_HOST, port=APP_PORT)
   
+
+# public.ecr.aws/m0x6o2l7/sensor-fault-detection
